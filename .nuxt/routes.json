@@ -1,9 +1,27 @@
 [
   {
-    "name": "index",
     "path": "/",
-    "component": "/Users/caorui/Desktop/大前端/realworld-nuxtjs/pages/index.vue",
-    "chunkName": "pages/index",
-    "_name": "_55ad73a8"
+    "component": "/Users/caorui/Desktop/大前端/realworld-nuxtjs/pages/layout",
+    "children": [
+      {
+        "path": "",
+        "name": "home",
+        "component": "/Users/caorui/Desktop/大前端/realworld-nuxtjs/pages/home",
+        "_name": "_361654e1"
+      },
+      {
+        "path": "/login",
+        "name": "login",
+        "component": "/Users/caorui/Desktop/大前端/realworld-nuxtjs/pages/login",
+        "_name": "_e626e0b2"
+      },
+      {
+        "path": "/register",
+        "name": "register",
+        "component": "/Users/caorui/Desktop/大前端/realworld-nuxtjs/pages/login",
+        "_name": "_e626e0b2"
+      }
+    ],
+    "_name": "_0fe862ac"
   }
 ]

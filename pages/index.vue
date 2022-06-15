@@ -1,3 +1,4 @@
+<!-- 已没用，可删 -->
 <template>
   <div class="home">首页</div>
 </template>
