@@ -4,7 +4,8 @@
 
 module.exports = {
   router: {
-    // linkActiveClass: 'active',
+    // 处理导航链接高亮-配置默认添加的类名
+    linkActiveClass: 'active',
     // 第一次加配置文件必须重启才能生效
     // 自定义路由表规则
     extendRoutes(routes,resolve){

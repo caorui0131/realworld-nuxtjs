@@ -9,7 +9,12 @@
                     <li class="nav-item">
                         <!-- Add "active" class when you're on that page" -->
                         <!-- <a class="nav-link active" href="">Home</a> -->
-                        <nuxt-link class="nav-link active" to="/">Home</nuxt-link>
+                             <!-- exact:精确匹配路由路径 linkActiveClass；未加是 以/开头就算，加上是=/才算 -->
+                        <nuxt-link 
+                            class="nav-link" 
+                            to="/" 
+                            exact
+                        >Home</nuxt-link>
                     </li>
                     <li class="nav-item">
                         <!-- <a class="nav-link" href="">
