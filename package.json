@@ -1,24 +1,22 @@
 {
   "name": "realworld-nuxtjs",
   "version": "1.0.0",
-  "description": "realworld-nuxtjs 输出「**部署成功的服务器地址**」：",
+  "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "nuxt"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/caorui0131/realworld-nuxtjs.git"
+    "dev": "nuxt",
+    "build": "nuxt build",
+    "start": "nuxt start"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/caorui0131/realworld-nuxtjs/issues"
-  },
-  "homepage": "https://github.com/caorui0131/realworld-nuxtjs#readme",
   "dependencies": {
-    "axios": "^0.27.2",
-    "nuxt": "^2.15.8"
+    "axios": "^0.19.2",
+    "cookieparser": "^0.1.0",
+    "dayjs": "^1.8.28",
+    "js-cookie": "^2.2.1",
+    "markdown-it": "^11.0.0",
+    "nuxt": "^2.12.2"
   }
 }

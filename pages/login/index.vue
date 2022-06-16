@@ -56,8 +56,12 @@
 // import request from '@/utils/request'
 import {login,register} from '@/api/user'
 
-// // 仅在客户端加载 js-cookie 包
-// const Cookie = process.client ? require('js-cookie') : undefined
+/**
+ * 用了一个叫js-cookie的第三方包，专门用来操作浏览器中cookie的第三方包，不是用来操作服务端的
+ * process.client:nuxt中特殊提供的判断 环境为 客户端/服务端 
+ */
+// 仅在客户端加载 js-cookie 包
+const Cookie = process.client ? require('js-cookie') : undefined
 
 export default {
 //   middleware: 'notAuthenticated',
@@ -112,6 +116,14 @@ export default {
             console.log('data:',data)
             // todo：保存用户的登录状态
             this.$store.commit('setUser', data.user)
+            
+            // 为了防止刷新页面数据丢失，我们需要把数据持久化
+            /**
+             * 登录注册-登录状态持久化:
+             * 不能本地存储化，因为只有客户端能拿到，服务端拿不到
+             * 我们需要这个数据客户端、服务端都能拿到，可以放cookie里
+             */
+            Cookie.set('user', data.user)
 
             // 跳转到首页
             this.$router.push('/')
