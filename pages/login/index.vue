@@ -9,9 +9,12 @@
                         <nuxt-link v-if="isLogin" to="/register">Need an account?</nuxt-link>
                         <nuxt-link v-else to="/login">Have an account?</nuxt-link>
                     </p>
-
+                    <!-- 遍历外层对象：1.额外添加父节点 2.template -->
                     <ul class="error-messages">
-                        <li>That email is already taken</li>
+                        <template v-for="(messages,field) in errors">
+                            <li  v-for="(message,index) in messages" :key="index">{{field}}{{message}}</li>
+                        </template>
+                        
                     </ul>
                         <!-- @submit.prevent :阻止表单的默认提交行为,由我们自己发起异步行为提交表单  -->
                     <form @submit.prevent="onSubmit">
@@ -68,16 +71,19 @@ export default {
     return {
       user: {
         // username: '',
-        email: '',
-        password: ''
+        email: '1@qq.com',
+        password: '1'
       },
-    //   errors: {} // 错误信息
+      errors: {
+        // email:['q','b'],
+        // password:['q','b']
+      } // 错误信息
     }
   },
 
   methods: {
     async onSubmit () {
-        console.log('onSubmit:')
+        console.log('onSubmit')
         /**
          * 11.登录注册-封装请求方法
          * 不建议在项目中直接写请求代码，一旦接口改动需要在项目中各个地方找请求的地方。
@@ -93,14 +99,21 @@ export default {
         //         user: this.user
         //     }
         // })
-        const { data }=await login({
-            user: this.user
-        })
-        console.log('data:',data)
-        // todo：保存用户的登录状态
+        try{
+            const { data }=await login({
+                user: this.user
+            })
+            console.log('data:',data)
+            // todo：保存用户的登录状态
 
-        // 跳转到首页
-        this.$router.push('/')
+            // 跳转到首页
+            this.$router.push('/')
+        }catch(err) {
+            console.log('请求失败:',err)
+            console.dir(err)
+            this.errors=err.response.data.errors;
+        }
+        
     }
   }
 }
