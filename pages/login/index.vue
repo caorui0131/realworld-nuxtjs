@@ -43,7 +43,8 @@
 
 <script>
 // import { login, register } from '@/api/user'
-import request from '@/utils/request'
+// import request from '@/utils/request'
+import {login} from '@/api/user'
 
 // // 仅在客户端加载 js-cookie 包
 // const Cookie = process.client ? require('js-cookie') : undefined
@@ -72,13 +73,23 @@ export default {
   methods: {
     async onSubmit () {
         console.log('onSubmit:')
+        /**
+         * 11.登录注册-封装请求方法
+         * 不建议在项目中直接写请求代码，一旦接口改动需要在项目中各个地方找请求的地方。
+         * 对它进行统一的组织，管理。方便维护、重用。
+         * 
+         * 建议把请求封装成一个方法（见api文件夹）
+         */
         // 提交表单请求登录
-        const { data }=await request({
-            method:'POST',
-            url:'/api/users/login',
-            data:{
-                user: this.user
-            }
+        // const { data }=await request({
+        //     method:'POST',
+        //     url:'/api/users/login',
+        //     data:{
+        //         user: this.user
+        //     }
+        // })
+        const { data }=await login({
+            user: this.user
         })
         console.log('data:',data)
         // todo：保存用户的登录状态
