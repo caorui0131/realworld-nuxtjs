@@ -19,7 +19,8 @@
                         <!-- @submit.prevent :阻止表单的默认提交行为,由我们自己发起异步行为提交表单  -->
                     <form @submit.prevent="onSubmit">
                         <fieldset v-if="!isLogin" class="form-group">
-                            <input class="form-control form-control-lg" 
+                            <input v-model="user.username"
+                            class="form-control form-control-lg" 
                             type="text" 
                             placeholder="Your Name" 
                             required>
@@ -36,7 +37,8 @@
                             class="form-control form-control-lg" 
                             type="password" 
                             placeholder="Password"
-                            required>
+                            required
+                min-length="8">
                         </fieldset>
                         <button class="btn btn-lg btn-primary pull-xs-right">
                             {{isLogin?'Sign up':'Sign in'}}
@@ -52,7 +54,7 @@
 <script>
 // import { login, register } from '@/api/user'
 // import request from '@/utils/request'
-import {login} from '@/api/user'
+import {login,register} from '@/api/user'
 
 // // 仅在客户端加载 js-cookie 包
 // const Cookie = process.client ? require('js-cookie') : undefined
@@ -70,9 +72,9 @@ export default {
   data () {
     return {
       user: {
-        // username: '',
-        email: '1@qq.com',
-        password: '1'
+        username: '',
+        email: '',
+        password: ''
       },
       errors: {
         // email:['q','b'],
@@ -100,7 +102,11 @@ export default {
         //     }
         // })
         try{
-            const { data }=await login({
+            const { data }=this.isLogin
+            ? await login({
+                user: this.user
+            })
+            : await register({
                 user: this.user
             })
             console.log('data:',data)
