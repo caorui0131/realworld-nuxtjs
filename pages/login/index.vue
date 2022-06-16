@@ -111,6 +111,7 @@ export default {
             })
             console.log('data:',data)
             // todo：保存用户的登录状态
+            this.$store.commit('setUser', data.user)
 
             // 跳转到首页
             this.$router.push('/')
