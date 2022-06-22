@@ -130,7 +130,12 @@ import {
 export default {
     name:'HomeIndex',
     async asyncData () {
-        const {data}=await getArticles()
+        const page=12;
+        const limit=20;
+        const {data}=await getArticles({
+            limit,
+            offset:(page-1)*limit,
+        })
         console.log('datadd:',data)
         // const page = Number.parseInt(query.page|| 1)
         // const limit = 20
