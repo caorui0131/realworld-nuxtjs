@@ -24,22 +24,60 @@
                       </ul>
                   </div>
 
-                  <div class="article-preview">
-                      <div class="article-meta">
-                          <a href="profile.html"><img src="http://i.imgur.com/Qr71crq.jpg"/></a>
-                          <div class="info">
-                              <a href="" class="author">Eric Simons</a>
-                              <span class="date">January 20th</span>
-                          </div>
-                          <button class="btn btn-outline-primary btn-sm pull-xs-right">
-                              <i class="ion-heart"></i> 29
-                          </button>
-                      </div>
-                      <a href="" class="preview-link">
-                          <h1>How to build webapps that scale</h1>
-                          <p>This is the description for the post.</p>
-                          <span>Read more...</span>
-                      </a>
+                  <div class="article-preview"
+                  v-for="article in articles"
+                  :key="article.slug">
+                        <div class="article-meta">
+                            <!-- <a href="profile.html">
+                                <img src="http://i.imgur.com/N4VcUeJ.jpg"/>
+                            </a> -->
+                            <nuxt-link :to="{
+                                name:'profile',
+                                params:{
+                                    username:article.author.username
+                                }
+                            }">
+                                <img src="http://i.imgur.com/Qr71crq.jpg"/>
+                            </nuxt-link>
+                            <div class="info">
+                                <!-- <a href="" class="author">Eric Simons</a> -->
+                                <nuxt-link  class="author" :to="{
+                                    name:'profile',
+                                    params:{
+                                        username:article.author.username
+                                    }
+                                }">
+                                    {{article.author.username}}
+                                </nuxt-link>
+                                <!-- <span class="date">January 20th</span> -->
+                                <span class="date">{{article.createdAt}}</span>
+                            </div>
+                            <button 
+                            class="btn btn-outline-primary btn-sm pull-xs-right"
+                            :class="{
+                                active:article.favorited
+                            }"
+                            >
+                                <i class="ion-heart"></i> 
+                                <!-- 29 -->
+                                {{article.favoritesCount}}
+                            </button>
+                        </div>
+                        <nuxt-link 
+                            :to="{
+                                name:'article',
+                                params:{
+                                    slug:article.slug
+                                }
+                            }" 
+                            class="preview-link"
+                        >
+                            <!-- <h1>How to build webapps that scale</h1> -->
+                            <h1>{{article.title}}</h1>
+                            <!-- <p>This is the description for the post.</p> -->
+                            <p>{{article.description}}</p>
+                            <span>Read more...</span>
+                        </nuxt-link >
                   </div>
 
                   <div class="article-preview">
@@ -86,8 +124,47 @@
 </template>
 
 <script>
+import {
+  getArticles,
+} from '@/api/article'
 export default {
     name:'HomeIndex',
+    async asyncData () {
+        const {data}=await getArticles()
+        console.log('datadd:',data)
+        // const page = Number.parseInt(query.page|| 1)
+        // const limit = 20
+        // const tab = query.tab || 'global_feed'
+        // const tag = query.tag
+
+        // const loadArticles = tab === 'global_feed'
+        // ? getArticles
+        // : getYourFeedArticles
+
+        // const [ articleRes, tagRes ] = await Promise.all([
+        //     loadArticles({
+        //         limit,
+        //         offset: (page - 1) * limit,
+        //         tag
+        //     }),
+        //     getTags()
+        // ])
+
+        // const { articles, articlesCount } = articleRes.data
+        // const { tags } = tagRes.data
+
+        // articles.forEach(article => article.favoriteDisabled = false)
+
+        return {
+            articles:data.articles, // 文章列表
+            articlesCount:data.articlesCount, // 文章总数
+            // tags, // 标签列表
+            // limit, // 每页大小
+            // page, // 页码
+            // tab, // 选项卡
+            // tag // 数据标签
+        }
+    },
     components: {},
     props:{},
     data(){
