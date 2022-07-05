@@ -112,14 +112,13 @@
                     <div class="sidebar">
                         <p>Popular Tags</p>
                         <div class="tag-list">
-                            <a href="" class="tag-pill tag-default">programming</a>
-                            <a href="" class="tag-pill tag-default">javascript</a>
-                            <a href="" class="tag-pill tag-default">emberjs</a>
-                            <a href="" class="tag-pill tag-default">angularjs</a>
-                            <a href="" class="tag-pill tag-default">react</a>
-                            <a href="" class="tag-pill tag-default">mean</a>
-                            <a href="" class="tag-pill tag-default">node</a>
-                            <a href="" class="tag-pill tag-default">rails</a>
+                            <!-- <a href="" class="tag-pill tag-default">programming</a> -->
+                            <a 
+                            href="" 
+                            class="tag-pill tag-default"
+                            v-for="item in tags"
+                            :key="item"
+                            >{{item}}</a>
                         </div>
                     </div>
                 </div>
@@ -129,9 +128,8 @@
 </template>
 
 <script>
-import {
-  getArticles,
-} from '@/api/article'
+import {getArticles} from '@/api/article'
+import {getTags} from '@/api/tag'
 export default {
     name:'HomeIndex',
     async asyncData ({query}) {
@@ -141,7 +139,8 @@ export default {
             limit,
             offset:(page-1)*limit,
         })
-        // console.log('datadd:',data)
+        const {data:tagData}=await getTags()
+        // console.log('tagData:',tagData)
         // const page = Number.parseInt(query.page|| 1)
         // const limit = 20
         // const tab = query.tab || 'global_feed'
@@ -169,7 +168,7 @@ export default {
             // 放进来才能表示放进组件的data里面来，别的地方才能用
             articles:data.articles, // 文章列表
             articlesCount:data.articlesCount, // 文章总数
-            // tags, // 标签列表
+            tags:tagData.tags, // 标签列表
             limit, // 每页大小
             page, // 页码
             // tab, // 选项卡
