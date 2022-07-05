@@ -135,11 +135,11 @@ export default {
     async asyncData ({query}) {
         const page=Number.parseInt(query.page||1);
         const limit=20;
-        const {data}=await getArticles({
-            limit,
-            offset:(page-1)*limit,
-        })
-        const {data:tagData}=await getTags()
+        // const {data}=await getArticles({
+        //     limit,
+        //     offset:(page-1)*limit,
+        // })
+        // const {data:tagData}=await getTags()
         // console.log('tagData:',tagData)
         // const page = Number.parseInt(query.page|| 1)
         // const limit = 20
@@ -149,26 +149,28 @@ export default {
         // const loadArticles = tab === 'global_feed'
         // ? getArticles
         // : getYourFeedArticles
-
-        // const [ articleRes, tagRes ] = await Promise.all([
-        //     loadArticles({
-        //         limit,
-        //         offset: (page - 1) * limit,
-        //         tag
-        //     }),
-        //     getTags()
-        // ])
-
-        // const { articles, articlesCount } = articleRes.data
-        // const { tags } = tagRes.data
+        // 首页-优化并行异步任务
+        const [ articleRes, tagRes ] = await Promise.all([
+            getArticles({
+                limit,
+                offset:(page-1)*limit,
+            }),
+            getTags()
+        ])
+        // 结构后下面就不用...去拿数据
+        const { articles, articlesCount } = articleRes.data
+        const { tags } = tagRes.data
 
         // articles.forEach(article => article.favoriteDisabled = false)
 
         return {
             // 放进来才能表示放进组件的data里面来，别的地方才能用
-            articles:data.articles, // 文章列表
-            articlesCount:data.articlesCount, // 文章总数
-            tags:tagData.tags, // 标签列表
+            // articles:data.articles, // 文章列表
+            // articlesCount:data.articlesCount, // 文章总数
+            // tags:tagData.tags, // 标签列表
+            articles, // 文章列表
+            articlesCount, // 文章总数
+            tags, // 标签列表
             limit, // 每页大小
             page, // 页码
             // tab, // 选项卡
