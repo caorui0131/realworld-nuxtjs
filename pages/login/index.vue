@@ -3,7 +3,7 @@
         <div class="container page">
             <div class="row">
                 <div class="col-md-6 offset-md-3 col-xs-12">
-                    <h1 class="text-xs-center">{{isLogin?'Sign up':'Sign in'}}</h1>
+                    <h1 class="text-xs-center">{{ isLogin ? 'Sign in' : 'Sign up' }}</h1>
                     <p class="text-xs-center">
                         <!-- <a href="">Have an account?</a> -->
                         <nuxt-link v-if="isLogin" to="/register">Need an account?</nuxt-link>
@@ -41,7 +41,7 @@
                 min-length="8">
                         </fieldset>
                         <button class="btn btn-lg btn-primary pull-xs-right">
-                            {{isLogin?'Sign up':'Sign in'}}
+                            {{isLogin?'Sign in' : 'Sign up' }}
                         </button>
                     </form>
                 </div>
