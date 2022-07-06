@@ -139,7 +139,7 @@
                                 query: {
                                 page: item,
                                 tag: $route.query.tag,
-                                // tab: tab
+                                tab: tab
                                 }
                             }"
                             >{{ item }}</nuxt-link>
@@ -176,12 +176,13 @@
 </template>
 
 <script>
-import {getArticles} from '@/api/article'
+import {getArticles,getYourFeedArticles} from '@/api/article'
 import {getTags} from '@/api/tag'
 import { mapState } from 'vuex';
 export default {
     name:'HomeIndex',
-    async asyncData ({query}) {
+    async asyncData ({query,store}) {
+        console.log("store:",store)
         const page=Number.parseInt(query.page||1);
         const limit=20;
         // const {data}=await getArticles({
@@ -192,15 +193,18 @@ export default {
         // console.log('tagData:',tagData)
         // const page = Number.parseInt(query.page|| 1)
         // const limit = 20
-        // const tab = query.tab || 'global_feed'
+        const tab = query.tab || 'global_feed'
         const {tag} = query
+        const loadArticles=store.state.user&&tab=== 'your_feed'
+        ?getYourFeedArticles
+        :getArticles
 
         // const loadArticles = tab === 'global_feed'
         // ? getArticles
         // : getYourFeedArticles
         // 首页-优化并行异步任务
         const [ articleRes, tagRes ] = await Promise.all([
-            getArticles({
+            loadArticles({
                 limit,
                 offset:(page-1)*limit,
                 tag,
@@ -223,7 +227,7 @@ export default {
             tags, // 标签列表
             limit, // 每页大小
             page, // 页码
-            tab:query.tab||'global_feed', // 选项卡
+            tab, // 选项卡
             tag // 数据标签
         }
     },
