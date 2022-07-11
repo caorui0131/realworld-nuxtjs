@@ -182,7 +182,7 @@ import { mapState } from 'vuex';
 export default {
     name:'HomeIndex',
     async asyncData ({query,store}) {
-        console.log("store:",store)
+        // console.log("store:",store)
         const page=Number.parseInt(query.page||1);
         const limit=20;
         // const {data}=await getArticles({

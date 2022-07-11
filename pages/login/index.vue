@@ -54,6 +54,7 @@
 <script>
 // import { login, register } from '@/api/user'
 // import request from '@/utils/request'
+// import { request } from '@/plugins/request'
 import {login,register} from '@/api/user'
 
 /**
