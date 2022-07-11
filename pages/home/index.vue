@@ -90,7 +90,8 @@
                                         {{article.author.username}}
                                     </nuxt-link>
                                     <!-- <span class="date">January 20th</span> -->
-                                    <span class="date">{{article.createdAt}}</span>
+                                    <!-- 调用全局过滤器date -->
+                                    <span class="date">{{article.createdAt | date('MMM DD,YYYY')}}</span>
                                 </div>
                                 <button 
                                 class="btn btn-outline-primary btn-sm pull-xs-right"
