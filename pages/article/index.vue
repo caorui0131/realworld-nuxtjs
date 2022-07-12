@@ -103,14 +103,14 @@ export default {
         ArticleMeta,
         // ArticleComments
     },
-    //   head () {
-    //     return {
-    //       title: `${this.article.title} - RealWorld`,
-    //       meta: [
-    //         { hid: 'description', name: 'description', content: this.article.description }
-    //       ]
-    //     }
-    //   }
+      head () {
+        return {
+          title: `${this.article.title} - RealWorld`,
+          meta: [
+            { hid: 'description', name: 'description', content: this.article.description }
+          ]
+        }
+      }
 }
 </script>
 
