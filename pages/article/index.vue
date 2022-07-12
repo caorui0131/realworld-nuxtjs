@@ -32,9 +32,10 @@
       <div class="container page">
 
           <div class="row article-content">
-              <div class="col-md-12">
+              <!-- <div class="col-md-12">
                   {{article.body}}
-              </div>
+              </div> -->
+              <div cass="col-md-12" v-html="article.body"></div>
           </div>
 
           <hr/>
@@ -120,7 +121,7 @@
 
 <script>
 import { getArticle } from '@/api/article'
-// import MarkdownIt from 'markdown-it'
+import MarkdownIt from 'markdown-it'
 // import ArticleMeta from './components/article-meta'
 // import ArticleComments from './components/article-comments'
 
@@ -129,8 +130,8 @@ export default {
   async asyncData ({ params }) {
     const { data } = await getArticle(params.slug)
     const { article } = data
-    // const md = new MarkdownIt()
-    // article.body = md.render(article.body)
+    const md = new MarkdownIt()
+    article.body = md.render(article.body)
     console.log('article1:',article)
     return {
       article
