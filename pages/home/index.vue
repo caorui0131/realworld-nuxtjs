@@ -98,6 +98,8 @@
                                 :class="{
                                     active:article.favorited
                                 }"
+                                @click="onFavorite(article)"
+                                :disabled="article.favoriteDisabled"
                                 >
                                     <i class="ion-heart"></i> 
                                     <!-- 29 -->
@@ -177,7 +179,12 @@
 </template>
 
 <script>
-import {getArticles,getYourFeedArticles} from '@/api/article'
+import {
+    getArticles,
+    getYourFeedArticles,
+    addFavorite,
+    deleteFavorite
+} from '@/api/article'
 import {getTags} from '@/api/tag'
 import { mapState } from 'vuex';
 export default {
@@ -215,6 +222,9 @@ export default {
         // 结构后下面就不用...去拿数据
         const { articles, articlesCount } = articleRes.data
         const { tags } = tagRes.data
+        //给每个 article对象添加 favoriteDisabled未禁用
+        articles.forEach(article => article.favoriteDisabled = false)
+
 
         // articles.forEach(article => article.favoriteDisabled = false)
 
@@ -248,7 +258,25 @@ export default {
     watch:{},
     created(){},
     mounted(){},
-    methods:{}
+    methods:{
+        async onFavorite(article){
+            console.log('article:',article)
+            // 避免连续点击当前按钮
+            article.favoriteDisabled = true
+            if (article.favorited) {
+                // 取消点赞
+                await deleteFavorite(article.slug)
+                article.favorited = false
+                article.favoritesCount += -1
+            } else {
+                // 添加点赞
+                await addFavorite(article.slug)
+                article.favorited = true
+                article.favoritesCount += 1
+            }
+            article.favoriteDisabled = false
+        }
+    }
 }
 </script>
 

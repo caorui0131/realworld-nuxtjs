@@ -24,7 +24,7 @@ export const getYourFeedArticles = params => {
   })
 }
 
-// 添加点赞
+//  添加点赞
 export const addFavorite = slug => {
   return request({
     method: 'POST',
