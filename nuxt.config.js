@@ -58,14 +58,20 @@ module.exports = {
       ])
     }
   },
-  // 注册插件
-  plugins: [
-    '~/plugins/request.js',
-    '~/plugins/dayjs.js'
-  ],
+  /**
+   * 和运行服务有关系
+   * localhost无法对外进行访问
+   * 如果想要让他对外进行访问，设置 host: '0.0.0.0'
+   *   在生产环境服务器：会监听所有的网卡地址，通过外网地址也就能访问了
+   *   在本地：局域网大家都能访问
+   */
   server: {
     host: '0.0.0.0',
     port: 3000
   },
-
+  // 注册插件
+  plugins: [
+    '~/plugins/request.js',
+    '~/plugins/dayjs.js'
+  ]
 }

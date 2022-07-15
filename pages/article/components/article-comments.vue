@@ -63,7 +63,7 @@ export default {
   // 只有在客户端才需要渲染
   async mounted () {
     const { data } = await getComments(this.article.slug)
-    console.log('data1:',data)
+    // console.log('data1:',data)
     this.comments = data.comments
   }
 }
